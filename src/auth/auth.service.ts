@@ -4,12 +4,14 @@ import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/c
 import * as argon from 'argon2'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { JwtService } from '@nestjs/jwt'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AuthService {
   constructor (
     private prismaService: PrismaService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private configService: ConfigService
   ) {}
 
   async signup (dto: IAuthLogin) {
@@ -60,7 +62,10 @@ export class AuthService {
     const payload = { sub: userExist.id, name: userExist.email }
 
     return {
-      accessToken: await this.jwtService.signAsync(payload)
+      accessToken: await this.jwtService.signAsync(payload, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+        expiresIn: '1d'
+      })
     }
   }
 }

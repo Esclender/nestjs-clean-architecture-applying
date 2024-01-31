@@ -5,7 +5,6 @@ import { UserModule } from './user/user.module'
 import { BookmarkModule } from './bookmark/bookmark.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { JwtModule } from '@nestjs/jwt'
-import { jwtSecret } from './constants'
 
 @Module({
   imports: [
@@ -13,11 +12,7 @@ import { jwtSecret } from './constants'
       isGlobal: true
     }),
     JwtModule.register({
-      secret: jwtSecret,
-      global: true,
-      signOptions: {
-        expiresIn: '60s'
-      }
+      global: true
     }),
     AuthModule,
     UserModule,
