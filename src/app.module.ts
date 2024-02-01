@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { AuthModule } from './auth/auth.module'
-import { UserModule } from './user/user.module'
-import { BookmarkModule } from './bookmark/bookmark.module'
-import { PrismaModule } from './prisma/prisma.module'
+import { PrismaModule } from './infrastructure/prisma/prisma.module'
 import { JwtModule } from '@nestjs/jwt'
+import { ControllersModule } from './infrastructure/controllers/controllers.module'
+import { EnviromentModule } from './infrastructure/config/config.module'
+import { UsecasesModule } from './usecases/usecases.module'
+import { RepositoriesModule } from './infrastructure/repositories/repositories.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true
-    }),
     JwtModule.register({
       global: true
     }),
-    AuthModule,
-    UserModule,
-    BookmarkModule,
-    PrismaModule
+    ControllersModule,
+    PrismaModule,
+    EnviromentModule,
+    UsecasesModule,
+    RepositoriesModule
   ]
 })
 export class AppModule {}

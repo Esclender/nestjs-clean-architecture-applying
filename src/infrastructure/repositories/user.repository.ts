@@ -1,9 +1,9 @@
-import { PrismaService } from './../prisma/prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
-import { IProfileDto } from './dto/profile.dto'
+import { IUserRepository, IProfileDto } from '../../domain'
 
 @Injectable()
-export class UserService {
+export class UserRepository implements IUserRepository {
   constructor (
     private prismaService: PrismaService
   ) {}
